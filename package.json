@@ -1,0 +1,38 @@
+{
+  "name": "pillmatrix-website",
+  "version": "1.0.0",
+  "description": "PillMatrix - AI-powered prescription management and healthcare coordination platform",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.0.18",
+    "firebase": "^12.4.0",
+    "react": "^18.x",
+    "react-dom": "^18.x",
+    "react-router-dom": "^6.x",
+    "tesseract.js": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/firebase": "^2.4.32",
+    "@types/react": "^18.x",
+    "@types/react-dom": "^18.x",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.x",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.x",
+    "stylelint": "^15.x",
+    "stylelint-config-standard": "^34.x",
+    "tailwindcss": "^3.x",
+    "typescript": "^5.x",
+    "vite": "^5.0.8"
+  }
+}
