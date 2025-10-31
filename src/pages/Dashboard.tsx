@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRightOnRectangleIcon, BellIcon, UserCircleIcon, XMarkIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRightOnRectangleIcon, XMarkIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../contexts/AuthContext';
 import type { UserDashboard, ChatMessage } from '@/types/dashboard';
 import type { UserRole } from '@/types/auth';
@@ -258,40 +258,6 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="text-2xl font-bold text-primary">
-              PillMatrix
-            </Link>
-            <div className="flex items-center gap-6">
-              <button className="relative text-gray-600 hover:text-primary">
-                <BellIcon className="w-6 h-6" />
-                <span className="absolute top-0 right-0 w-2 h-2 bg-accent rounded-full"></span>
-              </button>
-              <button
-                onClick={() => setShowProfileModal(true)}
-                className="flex items-center gap-3 hover:opacity-80 transition cursor-pointer"
-              >
-                <UserCircleIcon className="w-8 h-8 text-primary" />
-                <div className="text-sm text-left">
-                  <p className="font-semibold text-gray-900">{user.name || 'User'}</p>
-                  <p className="text-gray-600 capitalize">{user.role || 'Unknown'}</p>
-                </div>
-              </button>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-primary hover:bg-blue-700 rounded-lg transition"
-              >
-                <ArrowRightOnRectangleIcon className="w-4 h-4" />
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Profile Modal */}
       {showProfileModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -349,9 +315,16 @@ export function Dashboard() {
 
             <button
               onClick={() => setShowProfileModal(false)}
-              className="w-full px-4 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-blue-700 transition"
+              className="w-full px-4 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-blue-700 transition mb-4"
             >
               Close
+            </button>
+            <button
+              onClick={handleLogout}
+              className="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2"
+            >
+              <ArrowRightOnRectangleIcon className="w-5 h-5" />
+              Logout
             </button>
           </div>
         </div>

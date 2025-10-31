@@ -17,6 +17,8 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import PrescriptionUpload from "./pages/PrescriptionUpload";
 import { OCRTest } from './components/OCRTest';
 
+import { Layout } from './components/Layout';
+
 function AppContent() {
   const { isAuthenticated } = useAuth();
 
@@ -65,7 +67,9 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <AppContent />
+        <Layout>
+          <AppContent />
+        </Layout>
       </AuthProvider>
     </Router>
   );
