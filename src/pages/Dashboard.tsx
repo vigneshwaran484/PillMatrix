@@ -257,81 +257,9 @@ export function Dashboard() {
   const content = dashboardContent[user.role as UserRole] || dashboardContent.patient;
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Profile Modal */}
-      {showProfileModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Your Profile</h2>
-              <button
-                onClick={() => setShowProfileModal(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <XMarkIcon className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* QR Code Section */}
-            <div className="mb-8 p-6 bg-background rounded-lg text-center">
-              <p className="text-sm text-gray-600 mb-4">Your Patient QR Code</p>
-              <div className="bg-white p-4 rounded-lg border-2 border-primary inline-block">
-                <div className="w-40 h-40 bg-gradient-to-br from-primary to-blue-600 rounded flex items-center justify-center text-white text-center">
-                  <div>
-                    <div className="text-2xl mb-2">📱</div>
-                    <p className="text-xs font-semibold">QR Code</p>
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-gray-600 mt-4">Share this QR code with healthcare providers</p>
-            </div>
-
-            {/* Patient ID Section */}
-            <div className="mb-8 p-6 bg-background rounded-lg">
-              <p className="text-sm text-gray-600 mb-2">Patient ID Code</p>
-              <div className="bg-white p-4 rounded-lg border border-gray-300 font-mono text-center">
-                <p className="text-lg font-bold text-primary break-all">
-                  PM-{user.email?.split('@')[0].toUpperCase()}-{Date.now().toString(36).substr(-6).toUpperCase()}
-                </p>
-              </div>
-              <p className="text-xs text-gray-600 mt-2">Use this code for quick identification</p>
-            </div>
-
-            {/* Profile Info */}
-            <div className="space-y-4 mb-6">
-              <div>
-                <p className="text-sm text-gray-600">Full Name</p>
-                <p className="font-semibold text-gray-900">{user.name || 'Not provided'}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Email</p>
-                <p className="font-semibold text-gray-900">{user.email || 'Not provided'}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Role</p>
-                <p className="font-semibold text-gray-900 capitalize">{user.role || 'Unknown'}</p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setShowProfileModal(false)}
-              className="w-full px-4 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-blue-700 transition mb-4"
-            >
-              Close
-            </button>
-            <button
-              onClick={handleLogout}
-              className="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2"
-            >
-              <ArrowRightOnRectangleIcon className="w-5 h-5" />
-              Logout
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Main Content */}
-      <main className="container mx-auto px-6 py-12">
+    <div className="min-h-screen bg-background pt-8">
+      {/* Main Content - Direct start without header */}
+      <main className="container mx-auto px-6">
         {/* Welcome Section */}
         <div className="mb-12">
           <div className="text-5xl mb-4">{content.icon}</div>
@@ -462,6 +390,78 @@ export function Dashboard() {
           </div>
         </div>
       </main>
+
+      {/* Profile Modal */}
+      {showProfileModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-8">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Your Profile</h2>
+              <button
+                onClick={() => setShowProfileModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <XMarkIcon className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* QR Code Section */}
+            <div className="mb-8 p-6 bg-background rounded-lg text-center">
+              <p className="text-sm text-gray-600 mb-4">Your Patient QR Code</p>
+              <div className="bg-white p-4 rounded-lg border-2 border-primary inline-block">
+                <div className="w-40 h-40 bg-gradient-to-br from-primary to-blue-600 rounded flex items-center justify-center text-white text-center">
+                  <div>
+                    <div className="text-2xl mb-2">📱</div>
+                    <p className="text-xs font-semibold">QR Code</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-gray-600 mt-4">Share this QR code with healthcare providers</p>
+            </div>
+
+            {/* Patient ID Section */}
+            <div className="mb-8 p-6 bg-background rounded-lg">
+              <p className="text-sm text-gray-600 mb-2">Patient ID Code</p>
+              <div className="bg-white p-4 rounded-lg border border-gray-300 font-mono text-center">
+                <p className="text-lg font-bold text-primary break-all">
+                  PM-{user.email?.split('@')[0].toUpperCase()}-{Date.now().toString(36).substr(-6).toUpperCase()}
+                </p>
+              </div>
+              <p className="text-xs text-gray-600 mt-2">Use this code for quick identification</p>
+            </div>
+
+            {/* Profile Info */}
+            <div className="space-y-4 mb-6">
+              <div>
+                <p className="text-sm text-gray-600">Full Name</p>
+                <p className="font-semibold text-gray-900">{user.name || 'Not provided'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Email</p>
+                <p className="font-semibold text-gray-900">{user.email || 'Not provided'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Role</p>
+                <p className="font-semibold text-gray-900 capitalize">{user.role || 'Unknown'}</p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowProfileModal(false)}
+              className="w-full px-4 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-blue-700 transition mb-4"
+            >
+              Close
+            </button>
+            <button
+              onClick={handleLogout}
+              className="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2"
+            >
+              <ArrowRightOnRectangleIcon className="w-5 h-5" />
+              Logout
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* AI Chat Modal */}
       {showAIChat && user.role === 'patient' && (

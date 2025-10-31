@@ -1,5 +1,4 @@
 import { SparklesIcon, ShieldCheckIcon, BoltIcon, CubeTransparentIcon } from '@heroicons/react/24/outline';
-import { useNavigate } from 'react-router-dom';
 import type { ComponentType, SVGProps } from 'react';
 
 interface Feature {
@@ -21,12 +20,11 @@ const styles = {
 } as const;
 
 export function Features() {
-  const navigate = useNavigate();
-  
   const handleDemoRequest = () => {
-    navigate('/contact');
+    // Add your demo request logic here
+    console.log('Demo requested');
   };
-
+  
   const features: Feature[] = [
     {
       icon: SparklesIcon,
@@ -137,9 +135,9 @@ export function Features() {
   ];
 
   return (
-    <div className="bg-white min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary to-blue-600 text-white py-16 md:py-24">
+    <div className="bg-white">
+      {/* Hero Section - Direct start without navigation */}
+      <section className="bg-gradient-to-br from-primary to-blue-600 text-white pt-8 pb-16 md:pt-12 md:pb-24">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Powerful Features</h1>
           <p className="text-xl text-blue-100 max-w-2xl mx-auto">
