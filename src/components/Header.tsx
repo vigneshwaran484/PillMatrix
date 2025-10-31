@@ -16,8 +16,6 @@ export function Header() {
     }
   };
 
-  if (!user) return null;
-
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-6 py-4">
@@ -33,8 +31,8 @@ export function Header() {
             <div className="flex items-center gap-3">
               <UserCircleIcon className="w-8 h-8 text-primary" />
               <div className="text-sm text-left">
-                <p className="font-semibold text-gray-900">{user.name || 'User'}</p>
-                <p className="text-gray-600 capitalize">{user.role || 'Unknown'}</p>
+                <p className="font-semibold text-gray-900">{user?.name || 'User'}</p>
+                <p className="text-gray-600 capitalize">{user?.role || 'Unknown'}</p>
               </div>
             </div>
             <button
