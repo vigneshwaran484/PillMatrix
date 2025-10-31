@@ -8,7 +8,7 @@ async function testFirebaseConnection() {
     
     // Test Firestore connection
     const testRef = collection(db, 'test');
-    const snapshot = await getDocs(testRef);
+    await getDocs(testRef);
     console.log('✅ Firestore connection successful!');
     
     return true;

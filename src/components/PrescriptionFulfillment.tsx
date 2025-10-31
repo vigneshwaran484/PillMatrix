@@ -164,12 +164,7 @@ export function PrescriptionFulfillment({ onUpdate }: PrescriptionFulfillmentPro
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {prescriptions.map((prescription) => {
-                const isDelivered = prescription.status === 'delivered';
-                const isFilled = prescription.status === 'filled' || prescription.status === 'refilled';
-                const isPending = prescription.status === 'pending';
-                
-                return (
+              {prescriptions.map((prescription) => (
                 <tr key={prescription.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {prescription.patientName}
@@ -188,17 +183,17 @@ export function PrescriptionFulfillment({ onUpdate }: PrescriptionFulfillmentPro
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      isDelivered ? 'bg-green-100 text-green-800' :
-                      isFilled ? 'bg-blue-100 text-blue-800' :
+                      prescription.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                      prescription.status === 'filled' || prescription.status === 'refilled' ? 'bg-blue-100 text-blue-800' :
                       'bg-yellow-100 text-yellow-800'
                     }`}>
-                      {isDelivered ? 'Delivered' : isFilled ? 'Ready for Pickup' : 'Needs Filling'}
+                      {prescription.status === 'delivered' ? 'Delivered' : prescription.status === 'filled' || prescription.status === 'refilled' ? 'Ready for Pickup' : 'Needs Filling'}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                    {isDelivered ? (
+                    {prescription.status === 'delivered' ? (
                       <span className="text-green-600 font-medium">✓ Delivered</span>
-                    ) : isFilled ? (
+                    ) : prescription.status === 'filled' || prescription.status === 'refilled' ? (
                       <button
                         onClick={() => handleDeliverPrescription(prescription.id!)}
                         disabled={processingId === prescription.id}
@@ -229,7 +224,7 @@ export function PrescriptionFulfillment({ onUpdate }: PrescriptionFulfillmentPro
                     )}
                   </td>
                 </tr>
-              )})}
+              ))}
             </tbody>
           </table>
         )}

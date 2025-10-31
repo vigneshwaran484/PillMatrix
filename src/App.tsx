@@ -9,7 +9,7 @@ import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import PatientDashboard from './pages/dashboards/PatientDashboard';
 import DoctorDashboard from './pages/dashboards/DoctorDashboard';
-import PharmacistDashboard from './pages/dashboards/PharmacistDashboard';
+import { PharmacistDashboard } from './pages/dashboards/PharmacistDashboard';
 import LabTechnicianDashboard from './pages/dashboards/LabTechnicianDashboard';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';

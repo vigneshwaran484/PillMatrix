@@ -1,5 +1,4 @@
 // Pharmacist Service - Database operations for pharmacists
-import type { Prescription } from './patientService';
 
 export interface PharmacistProfile {
   id: string;

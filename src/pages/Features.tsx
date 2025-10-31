@@ -1,18 +1,24 @@
 import { SparklesIcon, ShieldCheckIcon, BoltIcon, CubeTransparentIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
+import type { ComponentType, SVGProps } from 'react';
 
 interface Feature {
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
   title: string;
   description: string;
   details: string[];
+}
+
+interface TechStack {
+  title: string;
+  description: string;
 }
 
 // Add these CSS classes to your global CSS or tailwind.config.js
 const styles = {
   sectionPadding: 'py-16 md:py-24',
   btnPrimary: 'px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-200 bg-white text-primary hover:bg-opacity-90 cursor-pointer',
-};
+} as const;
 
 export function Features() {
   const navigate = useNavigate();
@@ -21,7 +27,7 @@ export function Features() {
     navigate('/contact');
   };
 
-  const features = [
+  const features: Feature[] = [
     {
       icon: SparklesIcon,
       title: 'AI-Powered OCR',
@@ -104,6 +110,32 @@ export function Features() {
     },
   ];
 
+  const techStack: TechStack[] = [
+    {
+      title: 'Machine Learning & AI',
+      description: 'Advanced algorithms for OCR, drug interaction analysis, and patient behavior prediction.',
+    },
+    {
+      title: 'Cloud Infrastructure',
+      description: 'Scalable, secure cloud architecture ensuring 99.99% uptime and data redundancy.',
+    },
+    {
+      title: 'Blockchain Security',
+      description: 'Cryptographic verification and immutable audit trails for compliance and trust.',
+    },
+  ];
+
+  const integrations: string[] = [
+    'EHR Systems',
+    'Pharmacy Software',
+    'Lab Systems',
+    'Patient Apps',
+    'Insurance Platforms',
+    'Hospital Networks',
+    'Mobile Devices',
+    'Cloud Services'
+  ];
+
   return (
     <div className="bg-white min-h-screen">
       {/* Hero Section */}
@@ -158,20 +190,7 @@ export function Features() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Machine Learning & AI',
-                description: 'Advanced algorithms for OCR, drug interaction analysis, and patient behavior prediction.',
-              },
-              {
-                title: 'Cloud Infrastructure',
-                description: 'Scalable, secure cloud architecture ensuring 99.99% uptime and data redundancy.',
-              },
-              {
-                title: 'Blockchain Security',
-                description: 'Cryptographic verification and immutable audit trails for compliance and trust.',
-              },
-            ].map((tech, idx) => (
+            {techStack.map((tech, idx) => (
               <div key={idx} className="bg-background rounded-xl p-8 text-center">
                 <h3 className="text-xl font-bold text-gray-900 mb-3">{tech.title}</h3>
                 <p className="text-gray-600">{tech.description}</p>
@@ -193,7 +212,7 @@ export function Features() {
               PillMatrix integrates with existing healthcare systems and workflows.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {['EHR Systems', 'Pharmacy Software', 'Lab Systems', 'Patient Apps', 'Insurance Platforms', 'Hospital Networks', 'Mobile Devices', 'Cloud Services'].map((integration, idx) => (
+              {integrations.map((integration, idx) => (
                 <div key={idx} className="text-center p-4 border border-gray-200 rounded-lg hover:border-primary transition-colors">
                   <p className="font-semibold text-gray-900">{integration}</p>
                 </div>

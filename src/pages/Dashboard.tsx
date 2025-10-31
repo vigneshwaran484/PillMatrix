@@ -2,31 +2,91 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRightOnRectangleIcon, BellIcon, UserCircleIcon, XMarkIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../contexts/AuthContext';
+import type { UserDashboard, ChatMessage } from '@/types/dashboard';
+import type { UserRole } from '@/types/auth';
 
-type UserRole = 'patient' | 'doctor' | 'pharmacist' | 'lab';
-
-interface User {
-  role: UserRole;
-  name: string;
-  email: string;
-}
-
-interface DashboardItem {
-  name: string;
-  frequency?: string;
-  nextDue?: string;
-  daysLeft?: string;
-  lastVisit?: string;
-  status?: string;
-  uploadedAt?: string;
-}
-
-interface ChatMessage {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: Date;
-}
+const dashboardContent: Record<UserRole, UserDashboard> = {
+  patient: {
+    title: 'My Medications',
+    icon: '💊',
+    sections: [
+      {
+        title: 'Active Prescriptions',
+        items: [
+          { name: 'Metformin 500mg', frequency: 'Twice daily', nextDue: '2 hours' },
+          { name: 'Lisinopril 10mg', frequency: 'Once daily', nextDue: '8 hours' },
+        ],
+      },
+      {
+        title: 'Upcoming Refills',
+        items: [
+          { name: 'Vitamin D3', daysLeft: '5 days' },
+          { name: 'Aspirin 81mg', daysLeft: '12 days' },
+        ],
+      },
+    ],
+  },
+  doctor: {
+    title: 'Patient Management',
+    icon: '👨‍⚕️',
+    sections: [
+      {
+        title: 'Recent Patients',
+        items: [
+          { name: 'John Smith', lastVisit: 'Today', status: 'Active' },
+          { name: 'Sarah Johnson', lastVisit: 'Yesterday', status: 'Active' },
+          { name: 'Mike Davis', lastVisit: '3 days ago', status: 'Follow-up needed' },
+        ],
+      },
+      {
+        title: 'Pending Prescriptions',
+        items: [
+          { name: '2 prescriptions', status: 'Awaiting signature' },
+        ],
+      },
+    ],
+  },
+  pharmacist: {
+    title: 'Pharmacy Dashboard',
+    icon: '💊',
+    sections: [
+      {
+        title: 'Pending Prescriptions',
+        items: [
+          { name: '5 new prescriptions', status: 'Ready to verify' },
+          { name: '3 prescriptions', status: 'Awaiting patient pickup' },
+        ],
+      },
+      {
+        title: 'Inventory Alerts',
+        items: [
+          { name: 'Amoxicillin 500mg', status: 'Low stock' },
+          { name: 'Ibuprofen 200mg', status: 'Reorder needed' },
+        ],
+      },
+    ],
+  },
+  lab: {
+    title: 'Lab Reports',
+    icon: '🔬',
+    sections: [
+      {
+        title: 'Pending Tests',
+        items: [
+          { name: '8 samples', status: 'Processing' },
+          { name: '3 samples', status: 'Ready for upload' },
+        ],
+      },
+      {
+        title: 'Recent Uploads',
+        items: [
+          { name: 'Blood Work - John Smith', uploadedAt: '2 hours ago' },
+          { name: 'Urinalysis - Sarah Johnson', uploadedAt: '4 hours ago' },
+        ],
+      },
+    ],
+  },
+};
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -53,11 +113,6 @@ export function Dashboard() {
       // Force navigation even if logout fails
       navigate('/how-it-works');
     }
-  };
-
-  const generateQRCode = () => {
-    // This would be replaced with actual QR code generation
-    return `https://pillmatrix.com/patient/${user?.email?.split('@')[0] || 'user'}`;
   };
 
   const callGeminiAPI = async (userQuestion: string): Promise<string> => {
@@ -137,7 +192,7 @@ export function Dashboard() {
     // Add user message
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      role: 'user',
+      role: 'user' as const,
       content: chatInput,
       timestamp: new Date(),
     };
@@ -161,7 +216,7 @@ export function Dashboard() {
 
       const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: 'assistant' as const,
         content: finalResponse,
         timestamp: new Date(),
       };
@@ -173,7 +228,7 @@ export function Dashboard() {
       const fallbackResponse = generateLocalAIResponse(currentInput);
       const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: 'assistant' as const,
         content: fallbackResponse,
         timestamp: new Date(),
       };
@@ -198,89 +253,6 @@ export function Dashboard() {
     navigate('/login');
     return null;
   }
-
-  const dashboardContent = {
-    patient: {
-      title: 'My Medications',
-      icon: '💊',
-      sections: [
-        {
-          title: 'Active Prescriptions',
-          items: [
-            { name: 'Metformin 500mg', frequency: 'Twice daily', nextDue: '2 hours' },
-            { name: 'Lisinopril 10mg', frequency: 'Once daily', nextDue: '8 hours' },
-          ],
-        },
-        {
-          title: 'Upcoming Refills',
-          items: [
-            { name: 'Vitamin D3', daysLeft: '5 days' },
-            { name: 'Aspirin 81mg', daysLeft: '12 days' },
-          ],
-        },
-      ],
-    },
-    doctor: {
-      title: 'Patient Management',
-      icon: '👨‍⚕️',
-      sections: [
-        {
-          title: 'Recent Patients',
-          items: [
-            { name: 'John Smith', lastVisit: 'Today', status: 'Active' },
-            { name: 'Sarah Johnson', lastVisit: 'Yesterday', status: 'Active' },
-            { name: 'Mike Davis', lastVisit: '3 days ago', status: 'Follow-up needed' },
-          ],
-        },
-        {
-          title: 'Pending Prescriptions',
-          items: [
-            { name: '2 prescriptions', status: 'Awaiting signature' },
-          ],
-        },
-      ],
-    },
-    pharmacist: {
-      title: 'Pharmacy Dashboard',
-      icon: '💊',
-      sections: [
-        {
-          title: 'Pending Prescriptions',
-          items: [
-            { name: '5 new prescriptions', status: 'Ready to verify' },
-            { name: '3 prescriptions', status: 'Awaiting patient pickup' },
-          ],
-        },
-        {
-          title: 'Inventory Alerts',
-          items: [
-            { name: 'Amoxicillin 500mg', status: 'Low stock' },
-            { name: 'Ibuprofen 200mg', status: 'Reorder needed' },
-          ],
-        },
-      ],
-    },
-    lab: {
-      title: 'Lab Reports',
-      icon: '🔬',
-      sections: [
-        {
-          title: 'Pending Tests',
-          items: [
-            { name: '8 samples', status: 'Processing' },
-            { name: '3 samples', status: 'Ready for upload' },
-          ],
-        },
-        {
-          title: 'Recent Uploads',
-          items: [
-            { name: 'Blood Work - John Smith', uploadedAt: '2 hours ago' },
-            { name: 'Urinalysis - Sarah Johnson', uploadedAt: '4 hours ago' },
-          ],
-        },
-      ],
-    },
-  };
 
   const content = dashboardContent[user.role as UserRole] || dashboardContent.patient;
 
@@ -407,35 +379,35 @@ export function Dashboard() {
             <div key={idx} className="bg-white rounded-xl shadow-sm p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">{section.title}</h2>
               <div className="space-y-4">
-                {section.items.map((item: DashboardItem, itemIdx: number) => (
+                {section.items.map((item, itemIdx: number) => (
                   <div
-                    key={itemIdx}
-                    className="flex items-center justify-between p-4 bg-background rounded-lg hover:bg-gray-100 transition"
+                  key={itemIdx}
+                  className="flex items-center justify-between p-4 bg-background rounded-lg hover:bg-gray-100 transition"
                   >
-                    <div>
-                      <p className="font-semibold text-gray-900">{item.name}</p>
-                      <p className="text-sm text-gray-600">
-                        {item.frequency ||
-                          item.lastVisit ||
-                          item.status ||
-                          item.daysLeft ||
-                          item.nextDue ||
-                          item.uploadedAt}
-                      </p>
-                    </div>
-                    {item.status && (
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          item.status.includes('Active') || item.status.includes('Ready')
-                            ? 'bg-green-100 text-green-700'
-                            : item.status.includes('Low') || item.status.includes('Follow-up')
-                            ? 'bg-orange-100 text-orange-700'
-                            : 'bg-blue-100 text-blue-700'
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    )}
+                  <div>
+                    <p className="font-semibold text-gray-900">{item.name}</p>
+                    <p className="text-sm text-gray-600">
+                    {item.frequency ||
+                      item.lastVisit ||
+                      item.status ||
+                      item.daysLeft ||
+                      item.nextDue ||
+                      item.uploadedAt}
+                    </p>
+                  </div>
+                  {item.status && (
+                    <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      item.status.includes('Active') || item.status.includes('Ready')
+                      ? 'bg-green-100 text-green-700'
+                      : item.status.includes('Low') || item.status.includes('Follow-up')
+                      ? 'bg-orange-100 text-orange-700'
+                      : 'bg-blue-100 text-blue-700'
+                    }`}
+                    >
+                    {item.status}
+                    </span>
+                  )}
                   </div>
                 ))}
               </div>

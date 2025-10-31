@@ -4,7 +4,6 @@ import {
   getDocs,
   doc,
   query,
-  where,
   orderBy,
   Timestamp,
   updateDoc,
@@ -32,6 +31,7 @@ export interface InventoryItem {
 }
 
 // Create inventory item
+
 export const createInventoryItem = async (itemData: Omit<InventoryItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> => {
   try {
     console.log('📦 Creating inventory item:', itemData.name);

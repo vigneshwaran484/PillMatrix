@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Tesseract from 'tesseract.js';
-import { CloudArrowUpIcon, DocumentTextIcon, XMarkIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { CloudArrowUpIcon, XMarkIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import { createPrescription } from '../services/healthRecordService';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -19,8 +19,7 @@ interface ExtractedMedication {
   duration: string;
 }
 
-// Gemini API key for AI-powered prescription parsing
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const GEMINI_API_KEY = (import.meta as any).env?.VITE_GEMINI_API_KEY ?? '';
 
 export function PrescriptionUploader({ 
   patientId, 

@@ -39,7 +39,6 @@ const StatCard = ({ title, value, icon, to }: StatCardProps) => (
 export default function DoctorDashboard() {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedPatient, setSelectedPatient] = useState<{ id: string; name: string } | null>(null);
   const [showRecordsViewer, setShowRecordsViewer] = useState(false);
   const [showPrescriptionWriter, setShowPrescriptionWriter] = useState(false);
@@ -61,8 +60,6 @@ export default function DoctorDashboard() {
       setAppointments(data);
     } catch (error) {
       console.error('Error loading appointments:', error);
-    } finally {
-      setLoading(false);
     }
   };
 

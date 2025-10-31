@@ -49,10 +49,9 @@ const StatCard = ({ title, value, icon, to, trend = 'neutral' }: StatCardProps) 
   );
 };
 
-export default function PharmacistDashboard() {
+export function PharmacistDashboard() {
   const { user } = useAuth();
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
-  const [inventory, setInventory] = useState<any[]>([]);
   const [lowStockItems, setLowStockItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentView, setCurrentView] = useState<'prescriptions' | 'inventory'>('prescriptions');
@@ -112,7 +111,6 @@ export default function PharmacistDashboard() {
       console.log('✅ PharmacistDashboard: Low stock items:', lowStockData.length);
 
       setPrescriptions(prescriptionsData);
-      setInventory(inventoryData);
       setLowStockItems(lowStockData);
     } catch (error) {
       console.error('❌ PharmacistDashboard: Error loading data:', error);
@@ -202,7 +200,7 @@ export default function PharmacistDashboard() {
 
         {/* Stats */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map(({ key, ...statProps }, index) => (
+        {stats.map(({ key, ...statProps }) => (
           <div key={key} onClick={() => {
             if (statProps.to === '#prescriptions') setCurrentView('prescriptions');
             if (statProps.to === '#inventory') setCurrentView('inventory');
