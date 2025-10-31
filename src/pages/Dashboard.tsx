@@ -454,7 +454,7 @@ export function Dashboard() {
             </button>
             <button
               onClick={handleLogout}
-              className="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2"
+              className="w-full px-4 py-2 bg-gray-100 text-red-600 font-semibold rounded-lg hover:bg-red-50 transition flex items-center justify-center gap-2"
             >
               <ArrowRightOnRectangleIcon className="w-5 h-5" />
               Logout

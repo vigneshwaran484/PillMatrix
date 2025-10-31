@@ -20,10 +20,6 @@ const styles = {
 } as const;
 
 export function Features() {
-  const handleDemoRequest = () => {
-    // Add your demo request logic here
-    console.log('Demo requested');
-  };
   
   const features: Feature[] = [
     {
@@ -227,13 +223,13 @@ export function Features() {
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
             See how PillMatrix can transform your healthcare practice with a personalized demo.
           </p>
-          <button 
+          <a 
+            href="/contact"
             className={styles.btnPrimary}
-            onClick={handleDemoRequest}
-            aria-label="Request a Demo"
+            role="button"
           >
             Request a Demo
-          </button>
+          </a>
         </div>
       </section>
     </div>
